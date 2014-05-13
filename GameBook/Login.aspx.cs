@@ -55,7 +55,7 @@ public partial class Login : System.Web.UI.Page
                 {
                     Session["Username"] = CID.Parameters[0].Value;
                     sqlConn.Close();
-                    Response.Redirect("CreateForms.aspx");
+                    Response.Redirect("CreateForm.aspx");
                 }
                 Session["LoginCID"] = (int)drCID.GetValue(1);
                 SqlCommand Fname = new SqlCommand("SELECT FirstName FROM [Character] WHERE CharacterID = @CID", sqlConn);

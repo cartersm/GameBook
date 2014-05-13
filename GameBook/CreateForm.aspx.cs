@@ -24,7 +24,7 @@ public partial class CreateForm : System.Web.UI.Page
     {
         SqlConnection sqlConn = new SqlConnection("Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False");
         sqlConn.Open();
-        SqlCommand newChar = new SqlCommand("INSERT INTO [Character] (FirstName ,LastName ,Title ,About ,DOB ,Gender ,ImagePath) VALUES (@FName, @LName, @Title, @about, @DOB, @Gender, @ImagPath)", sqlConn);
+        SqlCommand newChar = new SqlCommand("INSERT INTO [Character] (FirstName ,LastName ,Title ,About ,DOB ,Gender ,ImagePath) VALUES (@FName, @LName, @Title, @about, @DOB, @Gender, @ImagPath); SELECT SCOPE_IDENTITY()", sqlConn);
         newChar.Parameters.Add("@FName", SqlDbType.NVarChar, 30, "FirstName");
         newChar.Parameters.Add("@LName", SqlDbType.NVarChar, 30, "LastName");
         newChar.Parameters.Add("@Title", SqlDbType.NVarChar, 30, "Title");
@@ -39,14 +39,15 @@ public partial class CreateForm : System.Web.UI.Page
         newChar.Parameters[4].Value = tbDOB.Text;
         newChar.Parameters[5].Value = RadioButtonList1.SelectedValue;
         newChar.Parameters[6].Value = "~/Images/default.png";
-        SqlCommand CID = new SqlCommand("SELECT SCOPE_IDENTITY()", sqlConn);
+
         SqlCommand LoginValues = new SqlCommand("INSERT INTO [Login] (Username, CharacterID) VALUES (@username, @CID)", sqlConn);
         LoginValues.Parameters.Add("@username", SqlDbType.NVarChar, 30, "Username");
         LoginValues.Parameters.Add("@CID", SqlDbType.Int, Int32.MaxValue, "CharacterID");
         LoginValues.Parameters[0].Value = Session["Username"];
-        newChar.ExecuteNonQuery();
         Session["Name"] = newChar.Parameters[0].Value;
-        LoginValues.Parameters[1].Value = (int)CID.ExecuteScalar();
+        lblAbout.Text = newChar.ExecuteScalar().ToString();
+        LoginValues.Parameters[1].Value = (int)newChar.ExecuteScalar();
+
         Session["LoginCID"] = LoginValues.Parameters[1].Value;
         LoginValues.ExecuteNonQuery();
         if(fulImgUpload.HasFile){

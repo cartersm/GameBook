@@ -19,7 +19,7 @@
         </tr>
         <tr >
                 <td class="auto-style1">
-                    <asp:Label ID="lblTitle" runat="server" Text="Title:" text-align="right"   style="width:auto; text-align:center; font-weight:700; " Font-Size="Large"></asp:Label>
+                    <asp:Label ID="lblTitle" runat="server" Text="Title:" text-align="right"   style="width:auto; text-align:center; font-weight:700; position:" Font-Size="Large"></asp:Label>
                     </td>
                 
                 <td class="auto-style1"><asp:TextBox ID="tbTitle" runat="server" MaxLength="30" Width="306px" Wrap="False"  style="margin-bottom: 0px; margin-top: 0px"></asp:TextBox></td>
