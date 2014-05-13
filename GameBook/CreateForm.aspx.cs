@@ -12,8 +12,8 @@ public partial class CreateForm : System.Web.UI.Page
 {
     protected void Page_Init(object sender, EventArgs e)
     {
-        if (Session["Username"] == null)
-            Response.Redirect("Register.aspx");
+     //   if (Session["Username"] == null)
+     //       Response.Redirect("Register.aspx");
     }
     protected void Page_Load(object sender, EventArgs e)
     {
