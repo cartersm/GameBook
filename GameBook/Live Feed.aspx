@@ -11,5 +11,17 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h3>TODO: make database connection to some test posts (copy-paste from Lab 9)</h3>
+    <h3>Most recent posts</h3>
+	<Table style="margin:0 auto">
+		<tr>
+			<td>
+				<!-- TODO: add posts here -->
+				<asp:DataList runat="server">
+					
+					
+				</asp:DataList>
+			</td>
+		</tr>
+	</Table>
+	
 </asp:Content>
