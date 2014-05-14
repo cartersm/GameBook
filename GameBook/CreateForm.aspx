@@ -9,8 +9,8 @@
     </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" Runat="Server">
 
-    <table  >
-        <tr >
+    <table style="margin-left:30px">
+        <tr>
             <td colspan="3">
                 <asp:Label ID="lblPageTitle" runat="server" CssClass="label" Font-Bold="True" Text="Create Your Character Profile" style="width:auto;" Font-Size="XX-Large"></asp:Label></td>
         </tr>
@@ -40,11 +40,6 @@
                     <asp:ListItem Value="F" Text="Female"></asp:ListItem>
                     <asp:ListItem Selected="True" Text="Unselected"></asp:ListItem>
                 </asp:RadioButtonList>
-                <!--<asp:DropDownList ID="DropDownList1" runat="server">
-                    <asp:ListItem></asp:ListItem>
-                    <asp:ListItem Value="M">Male</asp:ListItem>
-                    <asp:ListItem>Female</asp:ListItem>
-                </asp:DropDownList>-->
             </td>
             <td  colspan="1">
                 <asp:Label ID="lblDOB" runat="server" Text="DOB:" style="width:auto"></asp:Label>
