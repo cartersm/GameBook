@@ -43,7 +43,11 @@ public partial class Live_Feed : System.Web.UI.Page
 
 
 		drNotes.Close();
-
+        SqlDataSource1.ConnectionString="Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False";
+        SqlDataSource1.SelectCommand = "SELECT TOP 30 c.FirstName AS Name, n.PostTime AS Time, n.Message " +
+                                                "FROM Character AS c, Note AS n, PostToCharacter AS pc " +
+                                                "WHERE pc .CharacterID = "+ Session["LoginCID"] + " AND pc.PostID = n.NoteID AND c.CharacterID = n.PosterID "+ 
+                                                "ORDER BY n.PostTime DESC";
 		sqlConn.Close();
     }
 }
