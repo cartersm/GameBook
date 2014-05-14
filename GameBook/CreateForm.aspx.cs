@@ -46,7 +46,7 @@ public partial class CreateForm : System.Web.UI.Page
         LoginValues.Parameters[0].Value = Session["Username"];
         Session["Name"] = newChar.Parameters[0].Value;
         lblAbout.Text = newChar.ExecuteScalar().ToString();
-        LoginValues.Parameters[1].Value = (int)newChar.ExecuteScalar();
+        LoginValues.Parameters[1].Value = int.Parse(newChar.ExecuteScalar().ToString());
 
         Session["LoginCID"] = LoginValues.Parameters[1].Value;
         LoginValues.ExecuteNonQuery();
@@ -61,9 +61,5 @@ public partial class CreateForm : System.Web.UI.Page
         }
         sqlConn.Close();
         Response.Redirect("Live Feed.aspx");
-
-
-
-
     }
 }

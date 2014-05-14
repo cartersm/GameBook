@@ -10,12 +10,13 @@
         <tr>
             <td bgcolor="#5D7B9D" colspan="4" 
                 style="font-size: x-large; color: #3333CC; text-align: center;">
-                <strong style="color: #FFFFFF; ">Administrator Log In</strong></td>
+                <strong style="color: #FFFFFF; ">Administrator Log In</strong>
+			</td>
         </tr>
         <tr>
             <td bgcolor="#F7F6F3" colspan="4" 
                 style="font-size: x-large; color: #3333CC; text-align: center; height: 8px;">
-                </td>
+            </td>
         </tr>
         <tr>
             <td bgcolor="#F7F6F3" rowspan="3" width="270">
@@ -42,7 +43,7 @@
                     ControlToValidate="tbPass" ErrorMessage="*" ForeColor="Red"></asp:RequiredFieldValidator>
             </td>
             <td bgcolor="#F7F6F3">
-                <asp:Label ID="lbPass" runat="server" ForeColor="Red" Text="Incorrect password"></asp:Label>
+                <asp:Label ID="lbPass" runat="server" ForeColor="Red" Text="Incorrect password" Visible="false"></asp:Label>
             </td>
         </tr>
         <tr>

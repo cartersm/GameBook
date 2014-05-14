@@ -57,12 +57,13 @@ public partial class Login : System.Web.UI.Page
                     sqlConn.Close();
                     Response.Redirect("CreateForm.aspx");
                 }
-                Session["LoginCID"] = (int)drCID.GetValue(1);
+				drCID.Read();
+                Session["LoginCID"] = (int) drCID.GetValue(0);
                 SqlCommand Fname = new SqlCommand("SELECT FirstName FROM [Character] WHERE CharacterID = @CID", sqlConn);
                 Fname.Parameters.Add("@CID", SqlDbType.Int, Int32.MaxValue, "CharacterID");
-                Fname.Parameters[0].Value = CID.Parameters[0].Value;
+                Fname.Parameters[0].Value = (int) drCID.GetValue(0);
                 drCID.Close();
-                Session["Name"] = (string)Fname.ExecuteScalar();
+                Session["Name"] = (string) Fname.ExecuteScalar();
                 sqlConn.Close();
                 Response.Redirect("Live Feed.aspx");
             }
