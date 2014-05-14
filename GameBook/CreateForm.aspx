@@ -1,15 +1,15 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="CreateForm.aspx.cs" Inherits="CreateForm" %>
+﻿<%@ Page Title="Create Character Profile" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="CreateForm.aspx.cs" Inherits="CreateForm" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
     <style type="text/css">
         .auto-style1 {
-            width: 230px;
+            width: 260px;
         }
     </style>
     </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" Runat="Server">
 
-    <table style="margin-left:30px">
+    <table style="margin:0 auto">
         <tr>
             <td colspan="3">
                 <asp:Label ID="lblPageTitle" runat="server" CssClass="label" Font-Bold="True" Text="Create Your Character Profile" style="width:auto;" Font-Size="XX-Large"></asp:Label></td>
