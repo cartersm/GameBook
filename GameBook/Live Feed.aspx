@@ -16,11 +16,7 @@
 		<tr>
 			<td>
 				<!-- TODO: add posts here -->
-				<asp:DataList runat="server" ID="dlPosts">
-					
-					
-				</asp:DataList>
-			    <asp:GridView ID="gvPosts" runat="server" DataSourceID="SqlDataSource1">
+				<asp:GridView ID="gvPosts" runat="server" DataSourceID="SqlDataSource1">
                 </asp:GridView>
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False"></asp:SqlDataSource>
 			</td>
