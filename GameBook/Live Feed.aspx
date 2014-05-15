@@ -17,8 +17,27 @@
 			<td>
 				<!-- TODO: add posts here -->
 				<asp:GridView ID="gvPosts" runat="server" DataSourceID="SqlDataSource1">
+                    <Columns>
+                        <asp:CommandField ShowDeleteButton="True" />
+                    </Columns>
                 </asp:GridView>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False"></asp:SqlDataSource>
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionString2 %>" SelectCommand="SELECT TOP 30 c.FirstName AS Name, n.PostTime AS Time, n.Message, n.NoteID 
+FROM Character AS c, (SELECT * FROM Note, (SELECT PostID AS Post FROM PostToCharacter WHERE CharacterID = @currUser) AS pc WHERE NoteID =pc.Post) AS n
+WHERE  n.PosterID = c.CharacterID
+ORDER BY Time DESC" DeleteCommand="DELETE FROM PostToCharacter
+WHERE (PostToCharacter.CharacterID = @currUser) AND (PostToCharacter.PostID = @NoteID);
+DELETE FROM Note
+WHERE Note.NoteID = @NoteID">
+                    <DeleteParameters>
+                        <asp:Parameter Name="currUser" />
+                        <asp:Parameter Name="NoteID" />
+                    </DeleteParameters>
+                    <SelectParameters>
+                        <asp:SessionParameter DefaultValue="0" Name="currUser" SessionField="LoginCID" />
+                    </SelectParameters>
+                </asp:SqlDataSource>
+			    <br />
+                <asp:Button ID="btnCreatePost" runat="server" OnClick="btnCreatePost_Click" Text="Create Post" />
 			</td>
 		</tr>
 	</Table>

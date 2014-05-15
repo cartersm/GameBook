@@ -15,39 +15,11 @@ public partial class Live_Feed : System.Web.UI.Page
     }
     protected void Page_Load(object sender, EventArgs e)
     {
-		SqlConnection sqlConn = new SqlConnection("Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False");
-		sqlConn.Open();
-		SqlCommand notes = new SqlCommand("SELECT TOP 30 c.FirstName, c.LastName, n.Message " +
-												"FROM Character AS c, Note AS n " +
-												"WHERE c.CharacterID = n.PosterID " +
-												"ORDER BY n.PostTime DESC", sqlConn);
-		SqlDataReader drNotes = notes.ExecuteReader();
-
-		List<string> names = new List<string>();
-		List<string> posts = new List<string>();
-
-		while (drNotes.Read())
-		{
-			Object[] arr = new Object[3];
-			drNotes.GetValues(arr);
-
-			string name = (string) arr[0];
-			if (arr[1].GetType() != typeof(DBNull)) 
-			{
-				name += " " + arr[1];
-			}
-
-			names.Add(name);
-			posts.Add ( (string) arr[2]);
-		}
-
-
-		drNotes.Close();
         SqlDataSource1.ConnectionString="Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False";
-        SqlDataSource1.SelectCommand = "SELECT TOP 30 c.FirstName AS Name, n.PostTime AS Time, n.Message " +
-                                                "FROM Character AS c, Note AS n, PostToCharacter AS pc " +
-                                                "WHERE pc .CharacterID = "+ Session["LoginCID"] + " AND pc.PostID = n.NoteID AND c.CharacterID = n.PosterID "+ 
-                                                "ORDER BY n.PostTime DESC";
-		sqlConn.Close();
+        
+    }
+    protected void btnCreatePost_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("SendPost.aspx");
     }
 }
