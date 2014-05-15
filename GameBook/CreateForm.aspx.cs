@@ -45,10 +45,12 @@ public partial class CreateForm : System.Web.UI.Page
         LoginValues.Parameters.Add("@CID", SqlDbType.Int, Int32.MaxValue, "CharacterID");
         LoginValues.Parameters[0].Value = Session["Username"];
         Session["Name"] = newChar.Parameters[0].Value;
-        lblAbout.Text = newChar.ExecuteScalar().ToString();
+        
         LoginValues.Parameters[1].Value = int.Parse(newChar.ExecuteScalar().ToString());
-
         Session["LoginCID"] = LoginValues.Parameters[1].Value;
+        SqlCommand rescue = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES ( " + Session["LoginCID"] + ", " + Session["LoginCID"] + ", 1)", sqlConn);
+        rescue.ExecuteNonQuery();
+        
         LoginValues.ExecuteNonQuery();
         if(fulImgUpload.HasFile){
             fulImgUpload.SaveAs(Server.MapPath("Images/" + Session["LoginCID"] + ".png"));
