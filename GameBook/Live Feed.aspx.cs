@@ -22,4 +22,8 @@ public partial class Live_Feed : System.Web.UI.Page
     {
         Response.Redirect("SendPost.aspx");
     }
+    protected void btnRescue_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Rescue.aspx");
+    }
 }

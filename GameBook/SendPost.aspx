@@ -15,7 +15,8 @@
         <asp:RequiredFieldValidator ID="RequiredFieldValidatorPost" runat="server" ControlToValidate="tbPost" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
     </p>
     <p>
-        <asp:Button ID="btnCreatePost" runat="server" OnClick="btnCreatePost_Click" Text="Button" />
+        <asp:Button ID="btnCreatePost" runat="server" OnClick="btnCreatePost_Click" Text="Post" />
+        <asp:Button ID="btnLiveFeed" runat="server" CausesValidation="False" OnClick="btnLiveFeed_Click" Text="Home" />
     </p>
     <p>
         <asp:SqlDataSource ID="SqlDSPostTo" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionStringPost %>" SelectCommand="SELECT c.FirstName, r.Damsel 

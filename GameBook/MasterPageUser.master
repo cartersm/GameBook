@@ -44,14 +44,26 @@
                 <table class="auto-style2">
                     <tr>
                         <td>
-                            <asp:Image ID="imgCharacter" runat="server" />
+                            <asp:Image Width="200px" ID="imgCharacter" runat="server" ImageAlign="Left" />
                         </td>
                     </tr>
                     <tr>
                         <td class="auto-style1">
-                            <asp:GridView ID="GridView1" runat="server">
+                            <asp:GridView ID="gvRelationships" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceRelationships">
+                                <Columns>
+                                    <asp:BoundField DataField="Name" HeaderText="Name" ShowHeader="False" SortExpression="Name" />
+                                    <asp:BoundField DataField="Relation" HeaderText="Relation" ShowHeader="False" SortExpression="Relation" />
+                                </Columns>
                             </asp:GridView>
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
+                            <asp:SqlDataSource ID="SqlDataSourceRelationships" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionString2 %>" SelectCommand="SELECT c.FirstName AS Name, r.RelationshipName AS Relation
+FROM Character AS c, Relations AS r
+WHERE r.UserCID =@currUser AND c.CharacterID = r.RescuedCID
+ORDER BY Name ASC
+">
+                                <SelectParameters>
+                                    <asp:SessionParameter Name="currUser" SessionField="LoginCID" />
+                                </SelectParameters>
+                            </asp:SqlDataSource>
                         </td>
                     </tr>
                 </table>

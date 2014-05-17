@@ -21,9 +21,14 @@ public partial class Rescue : System.Web.UI.Page
     {
         SqlConnection sqlConn = new SqlConnection("Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False");
         sqlConn.Open();
-        SqlCommand newRescue = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES ( " + Session["LoginID"] + ", " + ddlDamsel.SelectedValue + ", 0)", sqlConn);
+        SqlCommand newRescue = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES ( " + Session["LoginCID"] + ", " + ddlDamsel.SelectedValue + ", 0)", sqlConn);
         newRescue.ExecuteNonQuery();
         sqlConn.Close();
         Response.Redirect("Rescue.aspx");
+    }
+    protected void btnLiveFeed_Click(object sender, EventArgs e)
+    {
+       
+        Response.Redirect("Live Feed.aspx");
     }
 }
