@@ -48,7 +48,9 @@ public partial class CreateForm : System.Web.UI.Page
         
         LoginValues.Parameters[1].Value = int.Parse(newChar.ExecuteScalar().ToString());
         Session["LoginCID"] = LoginValues.Parameters[1].Value;
-        SqlCommand rescue = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES ( " + Session["LoginCID"] + ", " + Session["LoginCID"] + ", 1)", sqlConn);
+        SqlCommand rescue = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES ( @currUser, @currUser, 1)", sqlConn);
+        rescue.Parameters.Add("@currUser", SqlDbType.Int, Int32.MaxValue, "Hero");
+        rescue.Parameters[0].Value = Session["LoginCID"];
         rescue.ExecuteNonQuery();
         
         LoginValues.ExecuteNonQuery();
