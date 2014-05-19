@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -21,7 +22,11 @@ public partial class Rescue : System.Web.UI.Page
     {
         SqlConnection sqlConn = new SqlConnection("Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False");
         sqlConn.Open();
-        SqlCommand newRescue = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES ( " + Session["LoginCID"] + ", " + ddlDamsel.SelectedValue + ", 0)", sqlConn);
+        SqlCommand newRescue = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES (@hero , @damsel, 0)", sqlConn);
+        newRescue.Parameters.Add("@hero", SqlDbType.Int, Int32.MaxValue, "Hero");
+        newRescue.Parameters.Add("@damsel", SqlDbType.Int, Int32.MaxValue, "Damsel");
+        newRescue.Parameters[0].Value = Session["LoginCID"];
+        newRescue.Parameters[1].Value = ddlDamsel.SelectedValue;
         newRescue.ExecuteNonQuery();
         sqlConn.Close();
         Response.Redirect("Rescue.aspx");
