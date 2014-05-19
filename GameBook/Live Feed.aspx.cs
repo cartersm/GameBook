@@ -30,4 +30,8 @@ public partial class Live_Feed : System.Web.UI.Page
     {
         Response.Redirect("Relation.aspx");
     }
+    //protected void gvPosts_RowCommand(object sender, GridViewCommandEventArgs e)
+    //{
+    //    if(e.CommandName = "addPowerUp")
+    //}
 }

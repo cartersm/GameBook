@@ -24,10 +24,11 @@
                         <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                         <asp:BoundField DataField="Time" HeaderText="Time" SortExpression="Time" />
                         <asp:BoundField DataField="Message" HeaderText="Message" SortExpression="Message" />
-                        <asp:BoundField DataField="NoteID" Visible="false" HeaderText="NoteID" InsertVisible="False" ReadOnly="True" SortExpression="NoteID" />
+                        <asp:BoundField DataField="NoteID" HeaderText="NoteID" InsertVisible="False" ReadOnly="True" SortExpression="NoteID" />
+                        <asp:BoundField DataField="PUp" HeaderText="PUp" ReadOnly="True" SortExpression="PUp" />
                     </Columns>
                 </asp:GridView>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionString2 %>" SelectCommand="SELECT TOP 30 c.FirstName AS Name, n.PostTime AS Time, n.Message, n.NoteID 
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionString2 %>" SelectCommand="SELECT TOP 30 c.FirstName AS Name, n.PostTime AS Time, n.Message, n.NoteID, (SELECT COUNT(CharacterID) FROM PowerUp WHERE CharacterID= @currUser AND PostID = n.NoteID) AS PUp
 FROM Character AS c, (SELECT * FROM Note, (SELECT PostID AS Post FROM PostToCharacter WHERE CharacterID = @currUser) AS pc WHERE NoteID =pc.Post) AS n
 WHERE  n.PosterID = c.CharacterID
 ORDER BY Time DESC" DeleteCommand="DELETE FROM PostToCharacter
@@ -43,7 +44,7 @@ WHERE Note.NoteID = @NoteID">
                     </SelectParameters>
                 </asp:SqlDataSource>
 			    <br />
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="NoteID" DataSourceID="SqlDataSource2">
+   <!--             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="NoteID" DataSourceID="SqlDataSource2">
                     <Columns>
                         <asp:CommandField ShowDeleteButton="True" />
                         <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
@@ -193,8 +194,7 @@ INSERT INTO [Comment] (PostID, CommentID) Values (@currNote, (SELECT SCOPE_IDENT
                             </td>
                         </tr>
                     </SelectedItemTemplate>
-                </asp:ListView>
-                <br />
+                </asp:ListView>-->
 			    <br />
                 <asp:Button ID="btnCreatePost" runat="server" OnClick="btnCreatePost_Click" Text="Create Post" />
 			    <br />

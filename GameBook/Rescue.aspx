@@ -20,13 +20,6 @@ ORDER BY c.FirstName ASC
     <asp:Button ID="btnRescueCharacter" runat="server" OnClick="btnRescueCharacter_Click" Text="Begin Rescue" />
     <br />
     <br />
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1">
-        <Columns>
-            <asp:CommandField ShowEditButton="True" />
-            <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="True" SortExpression="Name" />
-            <asp:BoundField DataField="Hero" HeaderText="Hero" ReadOnly="True" SortExpression="Hero" Visible="False" />
-        </Columns>
-    </asp:GridView>
     <asp:SqlDataSource ID="SqlDataSourceCompleteMission" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionStringPost %>" OldValuesParameterFormatString="original_{0}" SelectCommand="SELECT c.FirstName AS Name, r.Hero
 FROM Character AS c, Rescue AS r
 WHERE @currUser = r.Damsel AND r.Rescue_Status = 0 AND r.Hero = c.CharacterID" UpdateCommand="UPDATE Rescue SET Rescue_Status = 1 WHERE (Damsel = @currUserD) AND (Hero = @original_Hero)">
@@ -67,6 +60,94 @@ WHERE @currUser = r.Damsel AND r.Rescue_Status = 0 AND r.Hero = c.CharacterID" U
     </asp:CheckBoxList>
     <br />
     <asp:Button ID="btnRescued" runat="server" OnClick="btnRescued_Click" Text="Be Rescued" />
+    <br />
+    <asp:ListView ID="ListView2" runat="server" DataSourceID="SqlDataSource2" GroupItemCount="3">
+        <AlternatingItemTemplate>
+            <td runat="server" style="">Name:
+                <asp:Label ID="NameLabel" runat="server" Text='<%# Eval("Name") %>' />
+                <br />
+            </td>
+        </AlternatingItemTemplate>
+        <EditItemTemplate>
+            <td runat="server" style="">Name:
+                <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' />
+                <br />
+                <asp:Button ID="UpdateButton" runat="server" CommandName="Update" Text="Update" />
+                <br />
+                <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" Text="Cancel" />
+                <br />
+            </td>
+        </EditItemTemplate>
+        <EmptyDataTemplate>
+            <table runat="server" style="">
+                <tr>
+                    <td>No data was returned.</td>
+                </tr>
+            </table>
+        </EmptyDataTemplate>
+        <EmptyItemTemplate>
+            <td runat="server" />
+        </EmptyItemTemplate>
+        <GroupTemplate>
+            <tr id="itemPlaceholderContainer" runat="server">
+                <td id="itemPlaceholder" runat="server"></td>
+            </tr>
+        </GroupTemplate>
+        <InsertItemTemplate>
+            <td runat="server" style="">Name:
+                <asp:TextBox ID="NameTextBox" runat="server" Text='<%# Bind("Name") %>' />
+                <br />
+                <asp:Button ID="InsertButton" runat="server" CommandName="Insert" Text="Insert" />
+                <br />
+                <asp:Button ID="CancelButton" runat="server" CommandName="Cancel" Text="Clear" />
+                <br />
+            </td>
+        </InsertItemTemplate>
+        <ItemTemplate>
+            <td runat="server" style="">Name:
+                <asp:Label ID="NameLabel" runat="server" Text='<%# Eval("Name") %>' />
+                <br />
+            </td>
+        </ItemTemplate>
+        <LayoutTemplate>
+            <table runat="server">
+                <tr runat="server">
+                    <td runat="server">
+                        <table id="groupPlaceholderContainer" runat="server" border="0" style="">
+                            <tr id="groupPlaceholder" runat="server">
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr runat="server">
+                    <td runat="server" style="">
+                        <asp:DataPager ID="DataPager1" runat="server" PageSize="12">
+                            <Fields>
+                                <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowLastPageButton="True" />
+                            </Fields>
+                        </asp:DataPager>
+                    </td>
+                </tr>
+            </table>
+        </LayoutTemplate>
+        <SelectedItemTemplate>
+            <td runat="server" style="">Name:
+                <asp:Label ID="NameLabel" runat="server" Text='<%# Eval("Name") %>' />
+                <br />
+            </td>
+        </SelectedItemTemplate>
+    </asp:ListView>
+    <br />
+    <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionStringPost %>" SelectCommand="SELECT c.FirstName AS Name
+FROM Character AS c
+WHERE c.CharacterID  IN  (SELECT Hero FROM Rescue WHERE Rescue_Status = 1 AND Damsel = @currUser)
+ORDER BY Name ASC">
+        <SelectParameters>
+            <asp:SessionParameter DefaultValue="" Name="currUser" SessionField="LoginCID" />
+        </SelectParameters>
+    </asp:SqlDataSource>
+    <br />
+    <br />
     <br />
     <asp:Button ID="btnLiveFeed" runat="server" OnClick="btnLiveFeed_Click" Text="Home" />
     <br />
