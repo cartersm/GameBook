@@ -31,4 +31,15 @@ public partial class Rescue : System.Web.UI.Page
        
         Response.Redirect("Live Feed.aspx");
     }
+    protected void btnRescued_Click(object sender, EventArgs e)
+    {
+        SqlConnection sqlConn = new SqlConnection("Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False");
+        sqlConn.Open();
+        SqlCommand updateRescued = new SqlCommand("UPDATE [Rescue] SET Rescue_Status = 1 WHERE Hero = " + ddlHero.SelectedValue + " AND Damsel = " + Session["LoginCID"], sqlConn);
+        updateRescued.ExecuteNonQuery();
+        SqlCommand insertRescued = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES ( " + Session["LoginCID"] + ", " + ddlHero.SelectedValue + ", 1)", sqlConn);
+        insertRescued.ExecuteNonQuery();
+        sqlConn.Close();
+        Response.Redirect("Rescue.aspx");
+    }
 }
