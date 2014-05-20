@@ -34,4 +34,11 @@ public partial class Live_Feed : System.Web.UI.Page
     //{
     //    if(e.CommandName = "addPowerUp")
     //}
+    protected void btnLogoff_Click(object sender, EventArgs e)
+    {
+        Session["LoginCID"] = null;
+        Session["Username"] = null;
+        Session["Name"] = null;
+        Response.Redirect("Default.aspx");
+    }
 }

@@ -56,9 +56,9 @@ WHERE @currUser = r.Damsel AND r.Rescue_Status = 0 AND r.Hero = c.CharacterID" U
     </asp:DropDownList>
     <br />
     <br />
-    <asp:CheckBoxList ID="CheckBoxList1" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="Hero">
+  <!--  <asp:CheckBoxList ID="CheckBoxList1" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="Name" DataValueField="Hero">
     </asp:CheckBoxList>
-    <br />
+    <br /> -->
     <asp:Button ID="btnRescued" runat="server" OnClick="btnRescued_Click" Text="Be Rescued" />
     <br />
     <asp:ListView ID="ListView2" runat="server" DataSourceID="SqlDataSource2" GroupItemCount="3">

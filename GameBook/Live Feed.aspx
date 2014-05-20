@@ -24,8 +24,8 @@
                         <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                         <asp:BoundField DataField="Time" HeaderText="Time" SortExpression="Time" />
                         <asp:BoundField DataField="Message" HeaderText="Message" SortExpression="Message" />
-                        <asp:BoundField DataField="NoteID" HeaderText="NoteID" InsertVisible="False" ReadOnly="True" SortExpression="NoteID" />
-                        <asp:BoundField DataField="PUp" HeaderText="PUp" ReadOnly="True" SortExpression="PUp" />
+                        <asp:BoundField DataField="NoteID" HeaderText="NoteID" InsertVisible="False" ReadOnly="True" SortExpression="NoteID" Visible="False" />
+                        <asp:BoundField DataField="PUp" HeaderText="PUp" ReadOnly="True" SortExpression="PUp" Visible="False" />
                     </Columns>
                 </asp:GridView>
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionString2 %>" SelectCommand="SELECT TOP 30 c.FirstName AS Name, n.PostTime AS Time, n.Message, n.NoteID, (SELECT COUNT(CharacterID) FROM PowerUp WHERE CharacterID= @currUser AND PostID = n.NoteID) AS PUp
@@ -44,7 +44,9 @@ WHERE Note.NoteID = @NoteID">
                     </SelectParameters>
                 </asp:SqlDataSource>
 			    <br />
-   <!--             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="NoteID" DataSourceID="SqlDataSource2">
+                
+			    <br />
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="NoteID" DataSourceID="SqlDataSource2">
                     <Columns>
                         <asp:CommandField ShowDeleteButton="True" />
                         <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
@@ -59,22 +61,17 @@ WHERE  n.PosterID = c.CharacterID
 ORDER BY Time DESC" DeleteCommand="DELETE FROM Comment
  WHERE CommentID = @CommentID AND PostID = @currNote;
 DELETE FROM Note
-WHERE NoteID = @CommentID" InsertCommand="INSERT INTO [Note] (PosterID, PostTime, Message, PowerUpNumber) Values (@currUser, ,@Message, 0);
-INSERT INTO [Comment] (PostID, CommentID) Values (@currNote, (SELECT SCOPE_IDENTITY()))">
+WHERE NoteID = @CommentID">
                     <DeleteParameters>
                         <asp:Parameter Name="CommentID" />
                         <asp:ControlParameter ControlID="GridView1" Name="currNote" PropertyName="SelectedValue" />
                     </DeleteParameters>
-                    <InsertParameters>
-                        <asp:SessionParameter Name="currUser" SessionField="LoginCID" />
-                        <asp:Parameter Name="Message" />
-                        <asp:ControlParameter ControlID="GridView1" Name="currNote" PropertyName="SelectedValue" />
-                    </InsertParameters>
+                   
                     <SelectParameters>
                         <asp:ControlParameter ControlID="gvPosts" Name="currNote" PropertyName="SelectedValue" />
                     </SelectParameters>
                 </asp:SqlDataSource>
-                <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource2" DataKeyNames="NoteID" InsertItemPosition="LastItem">
+             <!--   <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource2" DataKeyNames="NoteID" InsertItemPosition="LastItem">
                     <AlternatingItemTemplate>
                         <tr style="">
                             <td>
@@ -195,6 +192,7 @@ INSERT INTO [Comment] (PostID, CommentID) Values (@currNote, (SELECT SCOPE_IDENT
                         </tr>
                     </SelectedItemTemplate>
                 </asp:ListView>-->
+                <asp:Button ID="btnLogoff" runat="server" Text="Log off" OnClick="btnLogoff_Click" />
 			    <br />
                 <asp:Button ID="btnCreatePost" runat="server" OnClick="btnCreatePost_Click" Text="Create Post" />
 			    <br />
