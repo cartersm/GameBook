@@ -19,7 +19,11 @@ public partial class Login : System.Web.UI.Page
         Boolean validPass = false;
         SqlConnection sqlConn = new SqlConnection("Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False");
         sqlConn.Open();
-        SqlCommand un = new SqlCommand("SELECT Username FROM [User]", sqlConn);
+        SqlCommand un = new SqlCommand();
+        un.Connection = sqlConn;
+        un.CommandType = CommandType.StoredProcedure;
+        un.CommandText = "Get_Usernames";
+        //SqlCommand un = new SqlCommand("SELECT Username FROM [User]", sqlConn);
         
         SqlDataReader drUN = un.ExecuteReader();
 
@@ -45,8 +49,12 @@ public partial class Login : System.Web.UI.Page
 
             if (validPass == true)
             {
-                
-                SqlCommand CID = new SqlCommand("SELECT CharacterID FROM [Login] WHERE Username = @username", sqlConn);
+
+                SqlCommand CID = new SqlCommand();
+                CID.Connection = sqlConn;
+                CID.CommandType = CommandType.StoredProcedure;
+                CID.CommandText = "Get_Login_CID";
+               // SqlCommand CID = new SqlCommand("SELECT CharacterID FROM [Login] WHERE Username = @username", sqlConn);
                 CID.Parameters.Add("@username", SqlDbType.NVarChar, 30, "Username");
                 CID.Parameters[0].Value = password.Parameters[0].Value;
                 drpass.Close();
@@ -59,6 +67,7 @@ public partial class Login : System.Web.UI.Page
                 }
 				drCID.Read();
                 Session["LoginCID"] = (int) drCID.GetValue(0);
+
                 SqlCommand Fname = new SqlCommand("SELECT FirstName FROM [Character] WHERE CharacterID = @CID", sqlConn);
                 Fname.Parameters.Add("@CID", SqlDbType.Int, Int32.MaxValue, "CharacterID");
                 Fname.Parameters[0].Value = (int) drCID.GetValue(0);

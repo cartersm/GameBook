@@ -31,13 +31,10 @@
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionString2 %>" SelectCommand="SELECT TOP 30 c.FirstName AS Name, n.PostTime AS Time, n.Message, n.NoteID, (SELECT COUNT(CharacterID) FROM PowerUp WHERE CharacterID= @currUser AND PostID = n.NoteID) AS PUp
 FROM Character AS c, (SELECT * FROM Note, (SELECT PostID AS Post FROM PostToCharacter WHERE CharacterID = @currUser) AS pc WHERE NoteID =pc.Post) AS n
 WHERE  n.PosterID = c.CharacterID
-ORDER BY Time DESC" DeleteCommand="DELETE FROM PostToCharacter
-WHERE (PostToCharacter.CharacterID = @currUser) AND (PostToCharacter.PostID = @NoteID);
-DELETE FROM Note
-WHERE Note.NoteID = @NoteID">
+ORDER BY Time DESC" DeleteCommand="DELETE FROM Note
+WHERE NoteID = @NoteID">
                     <DeleteParameters>
-                        <asp:Parameter Name="currUser" />
-                        <asp:Parameter Name="NoteID" />
+                        <asp:ControlParameter ControlID="gvPosts" Name="NoteID" PropertyName="SelectedValue" />
                     </DeleteParameters>
                     <SelectParameters>
                         <asp:SessionParameter DefaultValue="" Name="currUser" SessionField="LoginCID" />
@@ -52,16 +49,14 @@ WHERE Note.NoteID = @NoteID">
                         <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name" />
                         <asp:BoundField DataField="Time" HeaderText="Time" SortExpression="Time" />
                         <asp:BoundField DataField="Message" HeaderText="Message" SortExpression="Message" />
-                        <asp:BoundField DataField="NoteID" HeaderText="NoteID" InsertVisible="False" ReadOnly="True" SortExpression="NoteID" />
+                        <asp:BoundField DataField="NoteID" HeaderText="NoteID" InsertVisible="False" ReadOnly="True" SortExpression="NoteID" Visible="False" />
                     </Columns>
                 </asp:GridView>
                 <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionStringPost %>" SelectCommand="SELECT TOP 30 c.FirstName AS Name, n.PostTime AS Time, n.Message, n.NoteID 
 FROM Character AS c, (SELECT * FROM Note, (SELECT CommentID FROM Comment WHERE PostID = @currNote) AS comm WHERE NoteID =comm.CommentID) AS n
 WHERE  n.PosterID = c.CharacterID
 ORDER BY Time DESC" DeleteCommand="DELETE FROM Comment
- WHERE CommentID = @CommentID AND PostID = @currNote;
-DELETE FROM Note
-WHERE NoteID = @CommentID">
+ WHERE CommentID = @CommentID AND PostID = @currNote">
                     <DeleteParameters>
                         <asp:Parameter Name="CommentID" />
                         <asp:ControlParameter ControlID="GridView1" Name="currNote" PropertyName="SelectedValue" />

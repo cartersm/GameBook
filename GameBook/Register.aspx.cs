@@ -17,8 +17,12 @@ public partial class Register : System.Web.UI.Page
     {
         Boolean validUser = true;
         SqlConnection sqlConn = new SqlConnection("Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False");
-        sqlConn.Open();  
-        SqlCommand un = new SqlCommand("SELECT COUNT(Username) FROM [User] WHERE Username = @username", sqlConn);
+        sqlConn.Open();
+        SqlCommand un = new SqlCommand();
+        un.Connection = sqlConn;
+        un.CommandType = CommandType.StoredProcedure;
+        un.CommandText = "Get_Num_Username";
+        //SqlCommand un = new SqlCommand("SELECT COUNT(Username) FROM [User] WHERE Username = @username", sqlConn);
         un.Parameters.Add("@username", SqlDbType.NVarChar, 30, "Username");
         un.Parameters[0].Value = UserName.Text;
 
@@ -30,8 +34,12 @@ public partial class Register : System.Web.UI.Page
         }
         else
         {
+            SqlCommand newUser = new SqlCommand();
+            newUser.Connection = sqlConn;
+            newUser.CommandType = CommandType.StoredProcedure;
+            newUser.CommandText = "Create_User";
             lbName.Visible = false;
-            SqlCommand newUser = new SqlCommand("INSERT INTO [User] (Username, Password) VALUES (@username, @password)", sqlConn);
+            //SqlCommand newUser = new SqlCommand("INSERT INTO [User] (Username, Password) VALUES (@username, @password)", sqlConn);
             newUser.Parameters.Add("@username", SqlDbType.NVarChar, 30, "Username");
             newUser.Parameters.Add("@password", SqlDbType.NVarChar, 16, "Password");
             newUser.Parameters[0].Value = un.Parameters[0].Value;

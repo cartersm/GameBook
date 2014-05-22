@@ -22,9 +22,14 @@ public partial class Rescue : System.Web.UI.Page
     {
         SqlConnection sqlConn = new SqlConnection("Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False");
         sqlConn.Open();
-        SqlCommand newRescue = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES (@hero , @damsel, 0)", sqlConn);
-        newRescue.Parameters.Add("@hero", SqlDbType.Int, Int32.MaxValue, "Hero");
-        newRescue.Parameters.Add("@damsel", SqlDbType.Int, Int32.MaxValue, "Damsel");
+        SqlCommand newRescue = new SqlCommand();
+        newRescue.Connection = sqlConn;
+        newRescue.CommandType = CommandType.StoredProcedure;
+        newRescue.CommandText = "Create_Rescue";
+        //SqlCommand newRescue = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES (@hero , @damsel, 0)", sqlConn);
+        newRescue.Parameters.Add("@Hero", SqlDbType.Int, Int32.MaxValue, "Hero");
+        newRescue.Parameters.Add("@Damsel", SqlDbType.Int, Int32.MaxValue, "Damsel");
+        newRescue.Parameters.Add("@Rescue_Status", SqlDbType.Int, Int32.MaxValue, "Rescue_Status").Value = 0;
         newRescue.Parameters[0].Value = Session["LoginCID"];
         newRescue.Parameters[1].Value = ddlDamsel.SelectedValue;
         newRescue.ExecuteNonQuery();
@@ -40,18 +45,16 @@ public partial class Rescue : System.Web.UI.Page
     {
         SqlConnection sqlConn = new SqlConnection("Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False");
         sqlConn.Open();
-        SqlCommand updateRescued = new SqlCommand("UPDATE [Rescue] SET Rescue_Status = 1 WHERE Hero = @hero AND Damsel = @damsel", sqlConn);
-        updateRescued.Parameters.Add("@hero", SqlDbType.Int, Int32.MaxValue, "Hero");
-        updateRescued.Parameters.Add("@damsel", SqlDbType.Int, Int32.MaxValue, "Damsel");
+        SqlCommand updateRescued = new SqlCommand();
+        updateRescued.Connection = sqlConn;
+        updateRescued.CommandType = CommandType.StoredProcedure;
+        updateRescued.CommandText = "Update_Rescue";
+        //SqlCommand updateRescued = new SqlCommand("UPDATE [Rescue] SET Rescue_Status = 1 WHERE Hero = @hero AND Damsel = @damsel", sqlConn);
+        updateRescued.Parameters.Add("@Hero", SqlDbType.Int, Int32.MaxValue, "Hero");
+        updateRescued.Parameters.Add("@Damsel", SqlDbType.Int, Int32.MaxValue, "Damsel");
         updateRescued.Parameters[0].Value = ddlHero.SelectedValue;
         updateRescued.Parameters[1].Value = Session["LoginCID"];
         updateRescued.ExecuteNonQuery();
-        SqlCommand insertRescued = new SqlCommand("INSERT INTO [Rescue] (Hero, Damsel, Rescue_Status) VALUES ( @hero, @damsel, 1)", sqlConn);
-        insertRescued.Parameters.Add("@hero", SqlDbType.Int, Int32.MaxValue, "Hero");
-        insertRescued.Parameters.Add("@damsel", SqlDbType.Int, Int32.MaxValue, "Damsel");
-        insertRescued.Parameters[1].Value = ddlHero.SelectedValue;
-        insertRescued.Parameters[0].Value = Session["LoginCID"];
-        insertRescued.ExecuteNonQuery();
         sqlConn.Close();
         Response.Redirect("Rescue.aspx");
     }

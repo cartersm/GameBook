@@ -6,7 +6,7 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" Runat="Server">
     <p>
-        <asp:DropDownList ID="ddlPostTo" runat="server" DataSourceID="SqlDSPostTo" DataTextField="FirstName" DataValueField="Damsel">
+        <asp:DropDownList ID="ddlPostTo" runat="server" DataSourceID="SqlDSPostTo" DataTextField="Name" DataValueField="CharacterID">
         </asp:DropDownList>
         <asp:RequiredFieldValidator ID="RequiredFieldValidatorPostTo" runat="server" ControlToValidate="ddlPostTo" ErrorMessage="RequiredFieldValidator"></asp:RequiredFieldValidator>
     </p>
@@ -19,12 +19,10 @@
         <asp:Button ID="btnLiveFeed" runat="server" CausesValidation="False" OnClick="btnLiveFeed_Click" Text="Home" />
     </p>
     <p>
-        <asp:SqlDataSource ID="SqlDSPostTo" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionStringPost %>" SelectCommand="SELECT c.FirstName, r.Damsel 
-FROM Rescue AS r, Character AS c
-WHERE @currUser  = r.Hero AND r.Damsel = c.CharacterID AND r.Rescue_Status = 1 
-ORDER BY c.FirstName ASC">
+        <asp:SqlDataSource ID="SqlDSPostTo" runat="server" ConnectionString="<%$ ConnectionStrings:GameBookConnectionStringPost %>" SelectCommand="SELECT [Name], [CharacterID] FROM [Interact_View] WHERE (([Rescue_Status] = @Rescue_Status) AND ([Hero] = @Hero))">
             <SelectParameters>
-                <asp:SessionParameter Name="currUser" SessionField="LoginCID" />
+                <asp:Parameter DefaultValue="1" Name="Rescue_Status" Type="Int32" />
+                <asp:SessionParameter Name="Hero" SessionField="LoginCID" Type="Int32" />
             </SelectParameters>
         </asp:SqlDataSource>
     </p>

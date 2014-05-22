@@ -32,14 +32,21 @@ public partial class SendPost : System.Web.UI.Page
     {
         SqlConnection sqlConn = new SqlConnection("Server=titan.csse.rose-hulman.edu;Database=GameBook;User ID=finkac;Password=password;Trusted_Connection=False");
         sqlConn.Open();
-        SqlCommand newPost = new SqlCommand("INSERT INTO [Note] (PosterID, Message, PowerUpNumber) VALUES (@posterID, @NoteText, 0); SELECT SCOPE_IDENTITY()", sqlConn);
+        SqlCommand newPost = new SqlCommand();
+        newPost.Connection = sqlConn;
+        newPost.CommandType = CommandType.StoredProcedure;
+        newPost.CommandText = "Create_Note";
+        //SqlCommand newPost = new SqlCommand("INSERT INTO [Note] (PosterID, Message, PowerUpNumber) VALUES (@posterID, @NoteText, 0); SELECT SCOPE_IDENTITY()", sqlConn);
         newPost.Parameters.Add("@posterID", SqlDbType.Int, Int32.MaxValue, "PosterID");
         newPost.Parameters.Add("@NoteText", SqlDbType.NVarChar, 255, "Message");
         newPost.Parameters[0].Value = Session["LoginCID"];
         newPost.Parameters[1].Value = tbPost.Text;
 
-
-        SqlCommand toUser = new SqlCommand("INSERT INTO [PostToCharacter] (PostID, CharacterID) VALUES ( @postID, @charID)", sqlConn);
+        SqlCommand toUser = new SqlCommand();
+        toUser.Connection = sqlConn;
+        toUser.CommandType = CommandType.StoredProcedure;
+        toUser.CommandText = "Create_Post_To_Character";
+       // SqlCommand toUser = new SqlCommand("INSERT INTO [PostToCharacter] (PostID, CharacterID) VALUES ( @postID, @charID)", sqlConn);
         toUser.Parameters.Add("@postID", SqlDbType.Int, Int32.MaxValue, "PostID");
         toUser.Parameters.Add("@charID", SqlDbType.Int, Int32.MaxValue, "CharacterID");
         toUser.Parameters[0].Value = int.Parse(newPost.ExecuteScalar().ToString());
